@@ -1,6 +1,5 @@
-require "ahnnotate/version"
+require "active_record"
 
-module Ahnnotate
-  class Error < StandardError; end
-  # Your code goes here...
-end
+require "ahnnotate/error"
+require "ahnnotate/function/run"
+require "ahnnotate/version"
