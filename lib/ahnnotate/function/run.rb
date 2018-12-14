@@ -8,6 +8,7 @@ module Ahnnotate
       end
 
       def call
+        Facet::Models.add(@config, @infiles, @outfiles)
       end
     end
   end

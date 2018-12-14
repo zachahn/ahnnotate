@@ -7,12 +7,12 @@ class FeatureTest < TestCase
 
   def config
     {
-      autorun: {
-        enabled: true,
+      "autorun" => {
+        "enabled" => true,
       },
-      annotate: {
-        models: {
-          enabled: true
+      "annotate" => {
+        "models" => {
+          "enabled" => true
         }
       }
     }
