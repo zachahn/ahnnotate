@@ -1,6 +1,6 @@
 require "test_helper"
 
-class FeatureTest < TestCase
+class DirectlyInheritedTest < TestCase
   include FeatureHelper
 
   private

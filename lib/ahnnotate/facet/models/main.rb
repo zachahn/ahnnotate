@@ -1,16 +1,19 @@
 module Ahnnotate
   module Facet
     module Models
-      class Run
-        def initialize(config, infiles, outfiles)
+      class Main
+        def initialize(config, tables, infiles, outfiles)
           @config = config
+          @tables = tables
           @infiles = infiles
           @outfiles = outfiles
         end
 
         def call
           model_nodes.each do |model_node|
-            puts model_node.table_name
+            table = @tables[model_node.table_name]
+            @outfiles[model_node.path] =
+              table.string(comment: "#") + "\n" + @infiles[model_node.path]
           end
         end
 
