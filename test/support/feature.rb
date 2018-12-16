@@ -53,7 +53,7 @@ class FeatureTester
   end
 
   def infiles
-    @infiles ||= test_case["before"]
+    @infiles ||= convert_dollars_to_hashes(test_case["before"])
   end
 
   def outfiles
@@ -65,10 +65,7 @@ class FeatureTester
   end
 
   def expected_outfiles
-    @expected_outfiles ||=
-      test_case["after"]
-        .map { |path, contents| [path, contents.gsub(/^( *)\$/, "\\1#")] }
-        .to_h
+    @expected_outfiles ||= convert_dollars_to_hashes(test_case["after"])
   end
 
   def test_case
@@ -82,5 +79,12 @@ class FeatureTester
       "#{ActiveRecord::VERSION::MINOR}_" \
       "#{@adapter}" \
       ".yml"
+  end
+
+  # Replaces `$` with `#` in file contents since `#` is a comment in YAML
+  def convert_dollars_to_hashes(files)
+    files
+      .map { |path, contents| [path, contents.gsub(/^( *)\$/, "\\1#")] }
+      .to_h
   end
 end

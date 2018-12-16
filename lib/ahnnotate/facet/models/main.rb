@@ -10,10 +10,12 @@ module Ahnnotate
         end
 
         def call
+          formatter = Function::Format.new(comment: "#")
+
           model_nodes.each do |model_node|
             table = @tables[model_node.table_name]
             @outfiles[model_node.path] =
-              table.string(comment: "#") + "\n" + @infiles[model_node.path]
+              formatter.call(table, @infiles[model_node.path])
           end
         end
 

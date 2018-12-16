@@ -5,6 +5,7 @@ require "stringio"
 
 require "ahnnotate/column"
 require "ahnnotate/error"
+require "ahnnotate/function/format"
 require "ahnnotate/function/run"
 require "ahnnotate/facet/models"
 require "ahnnotate/facet/models/main"

@@ -1,0 +1,33 @@
+---
+before:
+  app/models/post.rb: |
+    $ == Schema Info
+    $
+    $ Table name: posts
+    $
+    $ id          integer
+    $ content     text
+    $ created_at  datetime
+    $ updated_at  datetime
+    $
+
+    $ This is a blog entry
+    class Post < ActiveRecord::Base
+    end
+after:
+  app/models/post.rb: |
+    $ == Schema Info
+    $
+    $ Table name: posts
+    $
+    $ id           integer
+    $ content      text
+    $ likes_count  integer
+    $ pinned       boolean
+    $ created_at   datetime
+    $ updated_at   datetime
+    $
+
+    $ This is a blog entry
+    class Post < ActiveRecord::Base
+    end
