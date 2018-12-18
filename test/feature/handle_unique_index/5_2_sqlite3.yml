@@ -1,0 +1,26 @@
+---
+before:
+  app/models/post.rb: |
+    class Post < ActiveRecord::Base
+    end
+after:
+  app/models/post.rb: |
+    $ == Schema Info
+    $
+    $ Table name: posts
+    $
+    $ id           integer
+    $ title        text
+    $ content      text
+    $ likes_count  integer
+    $ pinned       boolean
+    $ created_at   datetime
+    $ updated_at   datetime
+    $
+    $ Indexes:
+    $
+    $   index_posts_on_title  (title)  UNIQUE
+    $
+
+    class Post < ActiveRecord::Base
+    end

@@ -23,7 +23,20 @@ module Ahnnotate
           )
         end
 
-        yield Table.new(name: table_name, columns: columns)
+        indexes = @connection.indexes(table_name).map do |i|
+          Index.new(
+            name: i.name,
+            columns: i.columns,
+            unique: i.unique,
+            comment: i.comment
+          )
+        end
+
+        yield Table.new(
+          name: table_name,
+          columns: columns,
+          indexes: indexes
+        )
       end
     end
   end
