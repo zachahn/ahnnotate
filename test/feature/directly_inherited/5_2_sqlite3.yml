@@ -9,12 +9,12 @@ after:
     $
     $ Table name: posts
     $
-    $ id           integer
-    $ content      text
-    $ likes_count  integer
-    $ pinned       boolean
-    $ created_at   datetime
-    $ updated_at   datetime
+    $   id           integer
+    $   content      text
+    $   likes_count  integer
+    $   pinned       boolean
+    $   created_at   datetime
+    $   updated_at   datetime
     $
 
     class Post < ActiveRecord::Base

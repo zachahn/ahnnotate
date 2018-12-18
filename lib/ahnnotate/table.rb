@@ -11,32 +11,26 @@ module Ahnnotate
     end
 
     def string(comment:)
+      tabularizer =
+        Function::Tabularize.new(
+          cell_divider: "  ",
+          prefix: "#{comment}   "
+        )
+
       output = StringIO.new
       output.puts "#{comment} == Schema Info"
       output.puts comment
       output.puts "#{comment} Table name: #{@name}"
       output.puts comment
-
-      @columns.each do |column|
-        column_name_length = column.name.size
-        spacing_length = longest_column_name_length - column_name_length + 2
-        output.puts "#{comment} #{column.name}#{" " * spacing_length}#{column.type}"
-      end
+      output.print tabularizer.call(columns, [:name, :type])
+      output.puts comment
 
       if indexes.any?
-        tabularizer =
-          Function::Tabularize.new(
-            cell_divider: "  ",
-            prefix: "#{comment}   "
-          )
-
-        output.puts comment
         output.puts "#{comment} Indexes:"
         output.puts comment
         output.print tabularizer.call(indexes, [:name, :presentable_columns, :presentable_unique, :comment])
+        output.puts comment
       end
-
-      output.puts comment
 
       output.string
     end
