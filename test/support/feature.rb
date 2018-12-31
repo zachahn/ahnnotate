@@ -15,12 +15,14 @@ module FeatureHelper
 
         integrator.call(config)
 
+        vfs_as_hash = integrator.vfs.each.to_a.to_h
+
         integrator.expected_outfiles.each do |path, expected|
-          actual = integrator.outfiles.delete(path)
+          actual = vfs_as_hash.delete(path)
           assert_equal(expected, actual)
         end
 
-        integrator.outfiles.each do |path, actual|
+        vfs_as_hash.each do |path, actual|
           expected = integrator.expected_outfiles[path]
           assert_equal(expected, actual)
         end
@@ -48,16 +50,12 @@ class FeatureTester
   end
 
   def call(config)
-    runner = Ahnnotate::Function::Run.new(config, infiles, outfiles)
+    runner = Ahnnotate::Function::Run.new(config, vfs)
     runner.call
   end
 
-  def infiles
-    @infiles ||= convert_dollars_to_hashes(test_case["before"])
-  end
-
-  def outfiles
-    @outfiles ||= {}
+  def vfs
+    @vfs ||= Ahnnotate::Vfs.new(Ahnnotate::VfsDriver::Hash.new(convert_dollars_to_hashes(test_case["before"])))
   end
 
   def schema

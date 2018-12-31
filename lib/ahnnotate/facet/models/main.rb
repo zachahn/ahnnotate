@@ -2,11 +2,10 @@ module Ahnnotate
   module Facet
     module Models
       class Main
-        def initialize(config, tables, infiles, outfiles)
+        def initialize(config, tables, vfs)
           @config = config
           @tables = tables
-          @infiles = infiles
-          @outfiles = outfiles
+          @vfs = vfs
         end
 
         def call
@@ -14,8 +13,8 @@ module Ahnnotate
 
           model_nodes.each do |model_node|
             table = @tables[model_node.table_name]
-            @outfiles[model_node.path] =
-              formatter.call(table, @infiles[model_node.path])
+            @vfs[model_node.path] =
+              formatter.call(table, @vfs[model_node.path])
           end
         end
 
@@ -23,7 +22,7 @@ module Ahnnotate
           @model_nodes ||=
             begin
               model_path = @config.dig("annotate", "models", "path") || "app/models"
-              model_files = @infiles.select { |file| file.starts_with?(model_path) }
+              model_files = @vfs.each_in(model_path)
               processor = Processor.new
               models = model_files.map do |path, contents|
                 module_nodes = processor.call(contents)

@@ -1,14 +1,13 @@
 module Ahnnotate
   module Function
     class Run
-      def initialize(config, infiles, outfiles)
+      def initialize(config, vfs)
         @config = config
-        @infiles = infiles
-        @outfiles = outfiles
+        @vfs = vfs
       end
 
       def call
-        Facet::Models.add(@config, tables_hash, @infiles, @outfiles)
+        Facet::Models.add(@config, tables_hash, @vfs)
       end
 
       private
