@@ -1,0 +1,31 @@
+---
+before:
+  app/models/user.rb: |
+    class User < ActiveRecord::Base
+    end
+  app/models/guest.rb: |
+    class Guest
+      def preferred_name
+        "Guest"
+      end
+    end
+after:
+  app/models/user.rb: |
+    $ == Schema Info
+    $
+    $ Table name: users
+    $
+    $   id              integer
+    $   preferred_name  text
+    $   created_at      datetime
+    $   updated_at      datetime
+    $
+
+    class User < ActiveRecord::Base
+    end
+  app/models/guest.rb: |
+    class Guest
+      def preferred_name
+        "Guest"
+      end
+    end

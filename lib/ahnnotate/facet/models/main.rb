@@ -34,6 +34,8 @@ module Ahnnotate
                 .flatten
                 .yield_self(&ResolveClassRelationships.new)
                 .yield_self(&ResolveActiveRecordModels.new)
+                .select(&:is_a_kind_of_activerecord_base?)
+                .reject(&:abstract_class?)
             end
         end
       end

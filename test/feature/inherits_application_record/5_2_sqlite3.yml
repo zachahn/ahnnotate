@@ -1,0 +1,27 @@
+---
+before:
+  app/models/widget.rb: |
+    class Widget < ApplicationRecord
+    end
+  app/models/application_record.rb: |
+    class ApplicationRecord < ActiveRecord::Base
+      self.abstract_class = true
+    end
+after:
+  app/models/widget.rb: |
+    $ == Schema Info
+    $
+    $ Table name: widgets
+    $
+    $   id          integer
+    $   name        text
+    $   created_at  datetime
+    $   updated_at  datetime
+    $
+
+    class Widget < ApplicationRecord
+    end
+  app/models/application_record.rb: |
+    class ApplicationRecord < ActiveRecord::Base
+      self.abstract_class = true
+    end
