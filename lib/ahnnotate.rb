@@ -25,3 +25,7 @@ require "ahnnotate/options"
 require "ahnnotate/table"
 require "ahnnotate/tables"
 require "ahnnotate/version"
+
+if defined?(Rails)
+  require "ahnnotate/railtie"
+end
