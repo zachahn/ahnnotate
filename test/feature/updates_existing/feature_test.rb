@@ -6,16 +6,6 @@ class UpdatesExistingTest < TestCase
   private
 
   def config
-    {
-      "autorun" => {
-        "enabled" => true,
-      },
-      "annotate" => {
-        "models" => {
-          "enabled" => true
-        }
-      }
-    }
   end
 
   def current_dir

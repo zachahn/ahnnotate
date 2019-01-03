@@ -1,6 +1,6 @@
 namespace :db do
   task :migrate do
-    $rake_ahnnotate_config ||= Ahnnotate::Function::Main.config_in(Rails.root)
+    $rake_ahnnotate_config ||= Ahnnotate::Config.load(root: Rails.root)
 
     if $rake_ahnnotate_config["rake_db_autorun"]
       Rake::Task["ahnnotate:all"].reenable
@@ -9,7 +9,7 @@ namespace :db do
   end
 
   task :rollback do
-    $rake_ahnnotate_config ||= Ahnnotate::Function::Main.config_in(Rails.root)
+    $rake_ahnnotate_config ||= Ahnnotate::Config.load(root: Rails.root)
 
     if $rake_ahnnotate_config["rake_db_autorun"]
       Rake::Task["ahnnotate:all"].reenable

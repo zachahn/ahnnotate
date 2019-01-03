@@ -1,22 +1,6 @@
 module Ahnnotate
   module Function
     class Main
-      def self.config_in(app_root)
-        config_path = app_root.join(".ahnnotate.yml")
-
-        if !config_path.exist?
-          return {}
-        end
-
-        config = YAML.safe_load(File.read(config_path))
-
-        if config.is_a?(Hash)
-          config
-        else
-          {}
-        end
-      end
-
       def initialize(root, options, config)
         @root = root
         @options = options
@@ -24,7 +8,7 @@ module Ahnnotate
       end
 
       def call
-        if @config.key?("boot")
+        if @config["boot"]
           eval @config["boot"]
         end
 

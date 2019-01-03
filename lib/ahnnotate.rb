@@ -4,6 +4,7 @@ require "proc_party"
 require "stringio"
 
 require "ahnnotate/column"
+require "ahnnotate/config"
 require "ahnnotate/error"
 require "ahnnotate/vfs"
 require "ahnnotate/vfs_driver/filesystem"

@@ -50,7 +50,7 @@ class FeatureTester
   end
 
   def call(config)
-    runner = Ahnnotate::Function::Run.new(config, vfs)
+    runner = Ahnnotate::Function::Run.new(Ahnnotate::Config.new(config), vfs)
     runner.call
   end
 

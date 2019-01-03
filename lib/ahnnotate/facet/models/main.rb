@@ -21,7 +21,7 @@ module Ahnnotate
         def model_nodes
           @model_nodes ||=
             begin
-              model_path = @config.dig("annotate", "models", "path") || "app/models"
+              model_path = @config["annotate", "models", "path"]
               model_files = @vfs.each_in(model_path)
               processor = Processor.new
               models = model_files.map do |path, contents|
