@@ -16,10 +16,21 @@ module Ahnnotate
       end
 
       @connection.tables.each do |table_name|
+        primary_key = ActiveRecord::Base.get_primary_key(table_name)
+
         columns = @connection.columns(table_name).map do |c|
+          is_primary_key =
+            if primary_key.is_a?(Array)
+              primary_key.include?(c.name)
+            else
+              primary_key == c.name
+            end
+
           Column.new(
             name: c.name,
-            type: c.type.to_s
+            type: c.type.to_s,
+            nullable: c.null,
+            primary_key: is_primary_key
           )
         end
 

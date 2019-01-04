@@ -22,7 +22,7 @@ module Ahnnotate
       output.puts comment
       output.puts "#{comment} Table name: #{@name}"
       output.puts comment
-      output.print tabularizer.call(columns, [:name, :type])
+      output.print tabularizer.call(columns, [:name, :type, :details])
       output.puts comment
 
       if indexes.any?

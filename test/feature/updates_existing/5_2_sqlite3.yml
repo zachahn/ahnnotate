@@ -5,10 +5,10 @@ before:
     $
     $ Table name: posts
     $
-    $   id          integer
+    $   id          integer   not null, primary key
     $   content     text
-    $   created_at  datetime
-    $   updated_at  datetime
+    $   created_at  datetime  not null
+    $   updated_at  datetime  not null
     $
 
     $ This is a blog entry
@@ -20,12 +20,12 @@ after:
     $
     $ Table name: posts
     $
-    $   id           integer
+    $   id           integer   not null, primary key
     $   content      text
     $   likes_count  integer
     $   pinned       boolean
-    $   created_at   datetime
-    $   updated_at   datetime
+    $   created_at   datetime  not null
+    $   updated_at   datetime  not null
     $
 
     $ This is a blog entry

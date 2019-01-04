@@ -28,13 +28,15 @@ module Ahnnotate
 
         rows.each do |row|
           # Note: minimum_column_lengths shouldn't include any of the columns
-          # with a length of zero
+          # with a length of zero since they were never explicitly set (to 0)
           minimum_column_lengths.each.with_index do |(column_name, column_max_length), index|
             if index == 0
               output.print(@prefix)
             end
 
-            if index + 1 == minimum_column_lengths.size
+            if_rightmost_column = index + 1 == minimum_column_lengths.size
+
+            if if_rightmost_column
               output.puts "#{row[column_name]}"
             else
               column_length = row[column_name].size
@@ -44,7 +46,7 @@ module Ahnnotate
           end
         end
 
-        output.string
+        output.string.gsub(/ +$/, "")
       end
     end
   end
