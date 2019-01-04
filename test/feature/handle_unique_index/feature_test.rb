@@ -1,13 +1,6 @@
 require "test_helper"
 
-class HandleUniqueIndexTest < TestCase
-  include FeatureHelper
-
-  private
-
-  def config
-  end
-
+FeatureTest.define(feature_name: File.basename(__dir__)) do
   def current_dir
     Pathname.new(__dir__)
   end

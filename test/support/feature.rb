@@ -1,43 +1,16 @@
-module FeatureHelper
-  def test_it_works
-    ActiveRecord::Base.logger = nil
-    ActiveRecord::Migration.verbose = false
+module FeatureTest
+  def self.define(feature_name:)
+    feature_test_file, lineno, * = caller.first.split(":")
 
-    integration_databases.each do |adapter, connection_string|
-      integrator = FeatureTester.new(adapter: adapter, current_dir: current_dir)
+    klass = Class.new(TestCase)
+    klass.class_exec(&Proc.new)
+    klass.class_eval(
+      File.read(File.join(__dir__, "feature_test_contents.rb")),
+      feature_test_file,
+      lineno.to_i
+    )
 
-      begin
-        connection = ActiveRecord::Base.establish_connection(connection_string)
-
-        ActiveRecord::Schema.define do
-          instance_eval(integrator.schema, __FILE__, __LINE__)
-        end
-
-        integrator.call(config)
-
-        vfs_as_hash = integrator.vfs.each.to_a.to_h
-
-        integrator.expected_outfiles.each do |path, expected|
-          actual = vfs_as_hash.delete(path)
-          assert_equal(expected, actual)
-        end
-
-        vfs_as_hash.each do |path, actual|
-          expected = integrator.expected_outfiles[path]
-          assert_equal(expected, actual)
-        end
-      ensure
-        ActiveRecord::Base.remove_connection
-      end
-    end
-  end
-
-  private
-
-  def integration_databases
-    {
-      sqlite3: "sqlite3::memory:",
-    }
+    Object.const_set("feature_#{feature_name}".upcase, klass)
   end
 end
 
