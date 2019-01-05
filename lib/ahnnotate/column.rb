@@ -3,11 +3,12 @@ module Ahnnotate
     attr_reader :name
     attr_reader :type
 
-    def initialize(name:, type:, nullable:, primary_key:)
+    def initialize(name:, type:, nullable:, primary_key:, default:)
       @name = name
       @type = type
       @nullable = nullable
       @primary_key = primary_key
+      @default = default
     end
 
     def details
@@ -21,11 +22,31 @@ module Ahnnotate
         details.push("not null")
       end
 
+      if has_default?
+        details.push("default (#{default.inspect})")
+      end
+
       if primary_key?
         details.push("primary key")
       end
 
       @details = details.join(", ")
+    end
+
+    def default
+      if @default.nil?
+        return nil
+      end
+
+      if type == "boolean"
+        return !ActiveModel::Type::Boolean::FALSE_VALUES.include?(@default)
+      end
+
+      @default
+    end
+
+    def has_default?
+      !default.nil?
     end
 
     def nullable?

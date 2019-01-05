@@ -1,0 +1,21 @@
+---
+before:
+  app/models/post.rb: |
+    class Post < ActiveRecord::Base
+    end
+after:
+  app/models/post.rb: |
+    $ == Schema Info
+    $
+    $ Table name: posts
+    $
+    $   id           integer   not null, primary key
+    $   content      text      not null, default ("hi")
+    $   pinned       boolean   not null, default (false)
+    $   author_name  text      default ("Fish")
+    $   created_at   datetime  not null
+    $   updated_at   datetime  not null
+    $
+
+    class Post < ActiveRecord::Base
+    end

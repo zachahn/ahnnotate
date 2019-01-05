@@ -30,7 +30,8 @@ module Ahnnotate
             name: c.name,
             type: c.type.to_s,
             nullable: c.null,
-            primary_key: is_primary_key
+            primary_key: is_primary_key,
+            default: c.default
           )
         end
 
