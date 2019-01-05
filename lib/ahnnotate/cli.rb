@@ -1,4 +1,5 @@
 require "optparse"
+require "rubygems/text"
 
 module Ahnnotate
   class Cli
@@ -67,12 +68,13 @@ The configuration file (`.ahnnotate.yml`) must be placed at the root of your
 project, or wherever you will be calling this script. Any unset config option
 will fall back to the following default configuration:
 
-%{default_config}
+%{default}
 
-For a safe configuration for a Rails project, create a `.ahnnotate.yml`
-configuration file with the following contents:
+In Rails projects (projects which explicitly use the `Rails` gem), ahnnotate
+merges the following configs in with the defaults. This should allow ahnnotate
+to work out of the box.
 
-%{safe_rails_config}
+%{rails_additions}
 
 (It should generally be possible to speed up the "boot" process by only loading
 ActiveRecord, custom inflections, etc. Note though that the actual models do
@@ -81,8 +83,8 @@ not need to be loaded into the runtime; ahnnotate will read them as needed)
 
         output = format(
           configuration_file_help,
-          default_config: yaml_dump_and_indent(Ahnnotate::Config.default, indent: 4),
-          safe_rails_config: yaml_dump_and_indent(Ahnnotate::Config.safe_rails_override, indent: 4)
+          default: yaml_dump_and_indent(Ahnnotate::Config.default, indent: 4),
+          rails_additions: yaml_dump_and_indent(Ahnnotate::Config.rails_additions, indent: 4)
         )
 
         opts.separator wrap_and_indent(text: output, width: 72 + 4, indent: 4)
