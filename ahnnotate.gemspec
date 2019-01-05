@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency "pry"
 
-  spec.add_runtime_dependency "activerecord", ">= 4.0.0"
+  spec.add_runtime_dependency "activerecord", ">= 4.0.0", "< 6"
   spec.add_runtime_dependency "parser"
   spec.add_runtime_dependency "proc_party"
 end
