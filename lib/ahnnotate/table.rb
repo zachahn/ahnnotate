@@ -14,7 +14,7 @@ module Ahnnotate
       tabularizer =
         Function::Tabularize.new(
           prefix: "#{comment}   ",
-          cell_divider: "  "
+          cell_divider: "    "
         )
 
       output = StringIO.new
