@@ -1,9 +1,9 @@
 module Ahnnotate
   module Function
     class Tabularize
-      def initialize(cell_divider:, prefix:)
-        @cell_divider = cell_divider
+      def initialize(prefix:, cell_divider:)
         @prefix = prefix
+        @cell_divider = cell_divider
       end
 
       def call(data, column_names)

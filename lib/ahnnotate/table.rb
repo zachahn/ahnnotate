@@ -13,8 +13,8 @@ module Ahnnotate
     def string(comment:)
       tabularizer =
         Function::Tabularize.new(
-          cell_divider: "  ",
-          prefix: "#{comment}   "
+          prefix: "#{comment}   ",
+          cell_divider: "  "
         )
 
       output = StringIO.new
