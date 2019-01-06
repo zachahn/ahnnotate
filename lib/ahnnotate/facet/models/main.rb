@@ -13,6 +13,11 @@ module Ahnnotate
 
           model_nodes.each do |model_node|
             table = @tables[model_node.table_name]
+
+            if table.nil?
+              next
+            end
+
             @vfs[model_node.path] =
               formatter.call(table, @vfs[model_node.path])
           end

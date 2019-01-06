@@ -1,0 +1,9 @@
+---
+before:
+  app/models/widget.rb: |
+    class Widget < ActiveRecord::Base
+    end
+after:
+  app/models/widget.rb: |
+    class Widget < ActiveRecord::Base
+    end
