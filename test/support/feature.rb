@@ -45,11 +45,16 @@ class FeatureTester
   end
 
   def test_case_file_basename
-    @test_case_file_basename ||=
+    if @test_case_file_basename
+      return @test_case_file_basename
+    end
+
+    version =
       "#{ActiveRecord::VERSION::MAJOR}_" \
       "#{ActiveRecord::VERSION::MINOR}_" \
-      "#{@adapter}" \
-      ".yml"
+      "#{@adapter}"
+
+    @test_case_file_basename = version_to_version(version) + ".yml"
   end
 
   # Replaces `$` with `#` in file contents since `#` is a comment in YAML
@@ -57,5 +62,11 @@ class FeatureTester
     files
       .map { |path, contents| [path, contents.gsub(/^( *)\$/, "\\1#")] }
       .to_h
+  end
+
+  def version_to_version(version)
+    @version_to_version_mapping ||= {}
+
+    @version_to_version_mapping[version] || "5_2_#{@adapter}"
   end
 end

@@ -3,5 +3,5 @@ create_table :posts do |t|
   t.integer :likes_count
   t.boolean :pinned
 
-  t.timestamps
+  t.timestamps null: false
 end
