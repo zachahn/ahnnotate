@@ -39,7 +39,14 @@ module Ahnnotate
       end
 
       if type == "boolean"
-        return !ActiveModel::Type::Boolean::FALSE_VALUES.include?(@default)
+        default_is_false =
+          if ActiveRecordVersion.five_and_up?
+            ActiveModel::Type::Boolean::FALSE_VALUES.include?(@default)
+          else
+            ActiveRecord::ConnectionAdapters::Column::FALSE_VALUES.include?(@default)
+          end
+
+        return !default_is_false
       end
 
       @default

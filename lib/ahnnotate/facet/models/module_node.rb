@@ -117,6 +117,22 @@ module Ahnnotate
 
           super
         end
+
+        module ActiveRecord4Compatibility
+          class RelationDelegateClass
+            def initialize(*)
+            end
+          end
+
+          def relation_delegate_class(*)
+            RelationDelegateClass
+          end
+
+          def arel_table
+          end
+        end
+
+        include ActiveRecord4Compatibility
       end
     end
   end

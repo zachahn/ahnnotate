@@ -3,6 +3,7 @@ require "parser/current"
 require "proc_party"
 require "stringio"
 
+require "ahnnotate/active_record_version"
 require "ahnnotate/column"
 require "ahnnotate/config"
 require "ahnnotate/error"
