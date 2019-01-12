@@ -4,4 +4,19 @@ language: ruby
 cache: bundler
 rvm:
   - 2.5.3
+  - 2.1.10
+gemfile:
+  - gemfiles/rails52.gemfile
+  - gemfiles/rails51.gemfile
+  - gemfiles/rails50.gemfile
+  - gemfiles/rails42.gemfile
+  - gemfiles/rails41.gemfile
 before_install: gem install bundler -v 1.17.1
+matrix:
+  exclude:
+    - rvm: 2.1.10
+      gemfile: gemfiles/rails52.gemfile
+    - rvm: 2.1.10
+      gemfile: gemfiles/rails51.gemfile
+    - rvm: 2.1.10
+      gemfile: gemfiles/rails50.gemfile
