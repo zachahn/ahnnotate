@@ -1,3 +1,5 @@
+using Ahnnotate::Refinement::PathnameGlob
+
 module Ahnnotate
   module VfsDriver
     class Filesystem

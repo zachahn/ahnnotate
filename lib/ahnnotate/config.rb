@@ -1,3 +1,5 @@
+using Ahnnotate::Refinement::Dig
+
 module Ahnnotate
   class Config
     def self.load(root:)

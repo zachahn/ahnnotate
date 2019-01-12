@@ -1,3 +1,5 @@
+using Ahnnotate::Refinement::YieldSelf
+
 module Ahnnotate
   module Facet
     module Models
