@@ -18,7 +18,7 @@ module Ahnnotate
         )
 
       output = StringIO.new
-      output.puts "#{comment} == Schema Info"
+      output.puts "#{comment} == Schema Information"
       output.puts comment
       output.puts "#{comment} Table name: #{@name}"
       output.puts comment

@@ -9,7 +9,7 @@ before:
     end
 after:
   app/models/widget.rb: |
-    $ == Schema Info
+    $ == Schema Information
     $
     $ Table name: widgets
     $

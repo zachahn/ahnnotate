@@ -11,7 +11,7 @@ before:
     end
 after:
   app/models/user.rb: |
-    $ == Schema Info
+    $ == Schema Information
     $
     $ Table name: users
     $

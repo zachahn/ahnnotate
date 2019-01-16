@@ -1,6 +1,17 @@
 ---
 before:
   app/models/post.rb: |
+    $ == Schema Info
+    $
+    $ Table name: posts
+    $
+    $   id          integer   not null, primary key
+    $   content     text
+    $   created_at  datetime  not null
+    $   updated_at  datetime  not null
+    $
+
+    $ This is a blog entry
     class Post < ActiveRecord::Base
     end
 after:
@@ -10,17 +21,13 @@ after:
     $ Table name: posts
     $
     $   id             integer     not null, primary key
-    $   title          text
     $   content        text
     $   likes_count    integer
     $   pinned         boolean
     $   created_at     datetime    not null
     $   updated_at     datetime    not null
     $
-    $ Indexes:
-    $
-    $   index_posts_on_title    (title)    UNIQUE
-    $
 
+    $ This is a blog entry
     class Post < ActiveRecord::Base
     end

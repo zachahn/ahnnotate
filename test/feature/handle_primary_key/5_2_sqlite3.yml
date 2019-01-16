@@ -5,7 +5,7 @@ before:
     end
 after:
   app/models/post.rb: |
-    $ == Schema Info
+    $ == Schema Information
     $
     $ Table name: posts
     $

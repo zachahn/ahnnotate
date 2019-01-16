@@ -28,7 +28,7 @@ module Ahnnotate
           begin
             newline = /\r?\n\r?/
 
-            /\A#{comment}\s==\sSchema\sInfo#{newline}?(?:^#{comment}[^\n]*$#{newline})*#{newline}(?<post>.*)/m
+            /\A#{comment}\s==\sSchema\sInfo(?:rmation)?#{newline}?(?:^#{comment}[^\n]*$#{newline})*#{newline}(?<post>.*)/m
           end
       end
     end
