@@ -1,3 +1,4 @@
+require "yaml"
 require "active_record"
 require "parser/current"
 require "proc_party"
