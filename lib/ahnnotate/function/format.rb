@@ -14,22 +14,9 @@ module Ahnnotate
       private
 
       def strip_schema(content)
-        matches = pattern.match(content)
+        @schema_stripper ||= StripSchema.new(comment: comment)
 
-        if matches
-          matches["post"]
-        else
-          content
-        end
-      end
-
-      def pattern
-        @pattern ||=
-          begin
-            newline = /\r?\n\r?/
-
-            /\A#{comment}\s==\sSchema\sInfo(?:rmation)?#{newline}?(?:^#{comment}[^\n]*$#{newline})*#{newline}(?<post>.*)/m
-          end
+        @schema_stripper.call(content)
       end
     end
   end
