@@ -3,7 +3,7 @@ def test_it_works
   ActiveRecord::Migration.verbose = false
 
   integration_databases.each do |adapter, connection_string|
-    integrator = FeatureTester.new(adapter: adapter, current_dir: current_dir)
+    integrator = FeatureTester.new(adapter: adapter, current_dir: current_dir, target: target_class)
 
     begin
       connection = ActiveRecord::Base.establish_connection(connection_string)

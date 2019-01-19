@@ -1,5 +1,5 @@
 module FeatureTest
-  def self.define(feature_name:)
+  def self.define(feature_name:, target: Ahnnotate::Function::Main)
     feature_test_file, lineno, * = caller.first.split(":")
 
     klass = Class.new(TestCase)
@@ -10,6 +10,12 @@ module FeatureTest
       lineno.to_i
     )
 
+    klass.class_eval do
+      define_method :target_class do
+        target
+      end
+    end
+
     Object.const_set("feature_#{feature_name}".upcase, klass)
   end
 end
@@ -17,13 +23,14 @@ end
 class FeatureTester
   attr_reader :current_dir
 
-  def initialize(adapter:, current_dir:)
+  def initialize(adapter:, current_dir:, target:)
     @current_dir = current_dir
     @adapter = adapter
+    @target = target
   end
 
   def call(config)
-    function = Ahnnotate::Function::Main.new(
+    function = @target.new(
       %(this "path" is used for `vfs_driver` which isn't used in tests),
       Ahnnotate::Options.new,
       Ahnnotate::Config.new(config)
