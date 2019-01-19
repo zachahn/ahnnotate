@@ -23,8 +23,13 @@ class FeatureTester
   end
 
   def call(config)
-    runner = Ahnnotate::Function::Run.new(Ahnnotate::Config.new(config), vfs)
-    runner.call
+    function = Ahnnotate::Function::Main.new(
+      %(this "path" is used for `vfs_driver` which isn't used in tests),
+      Ahnnotate::Options.new,
+      Ahnnotate::Config.new(config)
+    )
+    function.vfs = vfs
+    function.call
   end
 
   def vfs

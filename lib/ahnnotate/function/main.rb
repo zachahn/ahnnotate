@@ -1,31 +1,24 @@
 module Ahnnotate
   module Function
     class Main
-      def initialize(root, options, config)
-        @root = root
-        @options = options
-        @config = config
-      end
+      include Command
 
       def call
         if @config["boot"]
           eval @config["boot"]
         end
 
-        vfs = Vfs.new(vfs_driver)
-
-        runner = Run.new(@config, vfs)
-        runner.call
+        Facet::Models.add(@config, tables_hash, vfs)
       end
 
       private
 
-      def vfs_driver
-        if @options.fix?
-          VfsDriver::Filesystem.new(root: @root)
-        else
-          VfsDriver::ReadOnlyFilesystem.new(root: @root)
-        end
+      def tables_hash
+        @tables_hash = tables.to_h
+      end
+
+      def tables
+        @tables ||= Tables.new
       end
     end
   end
