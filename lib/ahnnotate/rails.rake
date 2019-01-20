@@ -19,26 +19,34 @@ namespace :db do
 end
 
 namespace :ahnnotate do
-  desc "Run ahnnotate"
-  task :all do
+  desc "Add annotations"
+  task :add do
     require "ahnnotate/cli"
-    require "shellwords"
 
-    # This should either be `rails` or `rake` (since newer versions of Rails
-    # can call rake tasks with either executable)
-    exe_name = File.basename($0)
+    argv = ENV.fetch("AHNNOTATE_ADD", "--fix")
 
-    argv = ENV.fetch("AHNNOTATE", "--fix")
-    argv = Shellwords.split(argv)
+    puts "Adding annotations..."
 
-    puts "Annotating models..."
+    cli = Ahnnotate::Cli.new(name: "ahnnotate")
+    cli.run(argv, $rake_ahnnotate_config)
 
-    cli = Ahnnotate::Cli.new(name: "#{exe_name} ahnnotate")
+    puts "Done!"
+  end
+
+  desc "Remove annotations"
+  task :remove do
+    require "ahnnotate/cli"
+
+    argv = ENV.fetch("AHNNOTATE_REMOVE", "--fix --remove")
+
+    puts "Removing annotations..."
+
+    cli = Ahnnotate::Cli.new(name: "ahnnotate")
     cli.run(argv, $rake_ahnnotate_config)
 
     puts "Done!"
   end
 end
 
-desc "Run rake task `ahnnotate:all`"
-task ahnnotate: "ahnnotate:all"
+desc "Run rake task `ahnnotate:add`"
+task ahnnotate: "ahnnotate:add"

@@ -9,7 +9,13 @@ module Ahnnotate
     end
 
     def run(argv, config = nil)
-      argv = argv.dup
+      argv =
+        if argv.is_a?(String)
+          require "shellwords"
+          Shellwords.split(argv)
+        else
+          argv.dup
+        end
 
       debug_options = argv.delete("--debug-opts") || argv.delete("--debug-options")
 
@@ -26,7 +32,11 @@ module Ahnnotate
       root = Pathname.new(Dir.pwd)
       config ||= Config.load(root: root)
 
-      Function::Main.new(root, @options, config).call
+      if @options.remove?
+        Function::Niam.new(root, @options, config).call
+      else
+        Function::Main.new(root, @options, config).call
+      end
     end
 
     private
@@ -44,6 +54,10 @@ module Ahnnotate
 
         opts.on("--[no-]fix", "Actually modify files") do |fix|
           @options.fix = fix
+        end
+
+        opts.on("--remove", "Remove annotations") do |remove|
+          @options.remove = remove
         end
 
         opts.on("-h", "--help", "Prints this help message") do

@@ -1,0 +1,85 @@
+---
+before:
+  app/models/user.rb: |
+    $ == Schema Information
+    $
+    $ Table name: users
+    $
+    $   id                integer     not null, primary key
+    $   preferred_name    text
+    $   created_at        datetime    not null
+    $   updated_at        datetime    not null
+    $
+
+    class User < ActiveRecord::Base
+    end
+  app/models/guest.rb: |
+    $ == Schema Information
+    $
+    $ Table name: users
+    $
+    $   id                integer     not null, primary key
+    $   preferred_name    text
+    $   created_at        datetime    not null
+    $   updated_at        datetime    not null
+    $
+
+    $ Make sure that Guest responds to all of the User methods!
+    class Guest
+      def preferred_name
+        "Guest"
+      end
+    end
+  app/models/post.rb: |
+    $ == Schema Info
+    $
+    $ Table name: posts
+    $
+    $   id             integer     not null, primary key
+    $   content        text
+    $   likes_count    integer
+    $   pinned         boolean
+    $   created_at     datetime    not null
+    $   updated_at     datetime    not null
+    $
+
+    class Post < ActiveRecord::Base
+    end
+  app/models/user.txt: |
+    $ == Schema Information
+    $
+    $ Table name: users
+    $
+    $   id                integer     not null, primary key
+    $   preferred_name    text
+    $   created_at        datetime    not null
+    $   updated_at        datetime    not null
+    $
+
+    A copy of the schema lol
+after:
+  app/models/user.rb: |
+    class User < ActiveRecord::Base
+    end
+  app/models/guest.rb: |
+    $ Make sure that Guest responds to all of the User methods!
+    class Guest
+      def preferred_name
+        "Guest"
+      end
+    end
+  app/models/post.rb: |
+    class Post < ActiveRecord::Base
+    end
+  app/models/user.txt: |
+    $ == Schema Information
+    $
+    $ Table name: users
+    $
+    $   id                integer     not null, primary key
+    $   preferred_name    text
+    $   created_at        datetime    not null
+    $   updated_at        datetime    not null
+    $
+
+    A copy of the schema lol

@@ -21,6 +21,7 @@ module Ahnnotate
 
     attr_question :exit
     attr_question :fix
+    attr_question :remove
 
     def initialize(**args)
       args.each do |key, value|
