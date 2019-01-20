@@ -1,13 +1,14 @@
 # Ahnnotate
 
-Ahnnotate comments on your ActiveRecord models with their respective schemas!
+[Ahnnotate][rubygem] comments on your ActiveRecord models with their respective
+schemas!
 
 Ahnnotate performs static analysis on your files to determine which files
 should be annotated. The primary goals of ahnnotate are ease of configuration
 and correctness.
 
 It's very similar to [annotate][annotate] and was inspired heavily by it.
-Annotate has more features than ahnnotate does; it may fit your needs much
+Annotate has more features than ahnnotate does; it may fit your needs a bit
 better.
 
 
@@ -30,8 +31,7 @@ bundle
 
 Please use source control management software like git, mercurial, etc! The
 purpose of this software is to overwrite your source files. Although I'm pretty
-comfortable running this in my own projects, I've definitely made a couple bugs
-in my lifetime!
+comfortable running this, I've definitely made a couple bugs in my lifetime!
 
 
 ### In a Rails app
@@ -45,7 +45,8 @@ bundle exec rake ahnnotate
 ```
 
 (Leaving out the `--fix` argument runs the command but doesn't make any changes
-to your filesystem. The rake task assumes that you do want to fix by default.)
+to your filesystem. However, the rake task assumes that you do want to fix by
+default.)
 
 Ahnnotate automatically runs after running migrations. This can be disabled,
 though by creating a `.ahnnotate.yml` configuration file and setting
@@ -116,3 +117,4 @@ The gem is available as open source under the terms of the [MIT License][mit].
 [annotate]: https://github.com/ctran/annotate_models
 [github]: https://github.com/zachahn/ahnnotate
 [mit]: https://opensource.org/licenses/MIT
+[rubygem]: https://rubygems.org/gems/ahnnotate

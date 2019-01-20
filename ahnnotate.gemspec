@@ -8,8 +8,10 @@ Gem::Specification.new do |spec|
   spec.authors = ["Zach Ahn"]
   spec.email = ["engineering@zachahn.com"]
 
-  spec.summary = %("Annotate" your models)
-  spec.description = %(Heavily inspired by the `annotate` gem)
+  spec.summary = %(Ahnnotate comments on your ActiveRecord models with their respective schemas!)
+  spec.description = <<-DESC
+Ahnnotate comments on your ActiveRecord models with their respective schemas!
+DESC
   spec.license = "MIT"
 
   # Specify which files should be added to the gem when it is released.
