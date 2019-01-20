@@ -42,7 +42,7 @@ module Ahnnotate
       @driver.each(&Proc.new)
     end
 
-    def each_in(paths)
+    def each_in(paths, extensions = [])
       if !block_given?
         return enum_for(:each_in, paths)
       end
@@ -54,7 +54,17 @@ module Ahnnotate
           [paths]
         end
 
-      @driver.each_in(paths, &Proc.new)
+      extensions = [extensions].flatten.compact
+
+      @driver.each_in(paths) do |path, content|
+        if extensions.any?
+          if !extensions.include?(File.extname(path))
+            next
+          end
+        end
+
+        yield(path, content)
+      end
     end
 
     private

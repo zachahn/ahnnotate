@@ -21,6 +21,7 @@ module Ahnnotate
           "models" => {
             "enabled" => true,
             "path" => "app/models",
+            "extension" => ".rb",
           },
         },
       }

@@ -29,7 +29,8 @@ module Ahnnotate
           @model_nodes ||=
             begin
               model_path = @config["annotate", "models", "path"]
-              model_files = @vfs.each_in(model_path)
+              model_extension = @config["annotate", "models", "extension"]
+              model_files = @vfs.each_in(model_path, model_extension)
               processor = Processor.new
               models = model_files.map do |path, contents|
                 module_nodes = processor.call(contents)
