@@ -3,8 +3,8 @@ namespace :db do
     $rake_ahnnotate_config ||= Ahnnotate::Config.load(root: Rails.root)
 
     if $rake_ahnnotate_config["rake_db_autorun"]
-      Rake::Task["ahnnotate:all"].reenable
-      Rake::Task["ahnnotate:all"].invoke
+      Rake::Task["ahnnotate:add"].reenable
+      Rake::Task["ahnnotate:add"].invoke
     end
   end
 
@@ -12,8 +12,8 @@ namespace :db do
     $rake_ahnnotate_config ||= Ahnnotate::Config.load(root: Rails.root)
 
     if $rake_ahnnotate_config["rake_db_autorun"]
-      Rake::Task["ahnnotate:all"].reenable
-      Rake::Task["ahnnotate:all"].invoke
+      Rake::Task["ahnnotate:add"].reenable
+      Rake::Task["ahnnotate:add"].invoke
     end
   end
 end
