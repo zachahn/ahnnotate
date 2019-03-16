@@ -4,11 +4,16 @@ module FeatureTest
 
     klass = Class.new(TestCase)
     klass.class_exec(&Proc.new)
-    klass.class_eval(
-      File.read(File.join(__dir__, "feature_test_contents.rb")),
-      feature_test_file,
-      lineno.to_i
-    )
+    integration_databases.each do |adapter, database_url|
+      test_method_contents =
+        feature_test_method_template
+          .gsub(/PLACEHOLDER_DB_ADAPTER/, adapter)
+          .gsub(/PLACEHOLDER_DB_URL/, database_url)
+
+      klass.class_eval(test_method_contents, feature_test_file, lineno.to_i)
+    end
+
+    klass.class_eval(feature_test_helpers_contents, feature_test_file, lineno.to_i)
 
     klass.class_eval do
       define_method :target_class do
@@ -17,6 +22,23 @@ module FeatureTest
     end
 
     Object.const_set("feature_#{feature_name}".upcase, klass)
+  end
+
+  def self.integration_databases
+    @integration_databases ||= {
+      "sqlite3" => "sqlite3::memory:",
+      "postgres" => ENV["AHNNOTATE_POSTGRES_DATABASE_URL"],
+    }
+  end
+
+  def self.feature_test_helpers_contents
+    @feature_test_helpers_contents ||=
+      File.read(File.join(__dir__, "feature_test_helpers.rb"))
+  end
+
+  def self.feature_test_method_template
+    @feature_test_method_template ||=
+      File.read(File.join(__dir__, "feature_test_method.rb"))
   end
 end
 
@@ -53,21 +75,14 @@ class FeatureTester
 
   def test_case
     @test_case ||=
-      YAML.load_file(current_dir.join(test_case_file_basename))
+      if test_case_file_path
+        YAML.load_file(test_case_file_path)
+      else
+        {}
+      end
   end
 
-  def test_case_file_basename
-    if @test_case_file_basename
-      return @test_case_file_basename
-    end
-
-    version =
-      "#{ActiveRecord::VERSION::MAJOR}_" \
-      "#{ActiveRecord::VERSION::MINOR}_" \
-      "#{@adapter}"
-
-    @test_case_file_basename = version_to_version(version) + ".yml"
-  end
+  private
 
   # Replaces `$` with `#` in file contents since `#` is a comment in YAML
   def convert_dollars_to_hashes(files)
@@ -76,9 +91,21 @@ class FeatureTester
       .to_h
   end
 
-  def version_to_version(version)
-    @version_to_version_mapping ||= {}
+  def test_case_file_path
+    if instance_variable_defined?(:@test_case_file_path)
+      return @test_case_file_path
+    end
 
-    @version_to_version_mapping[version] || "5_2_#{@adapter}"
+    rails_version = "#{ActiveRecord::VERSION::MAJOR}_#{ActiveRecord::VERSION::MINOR}"
+
+    basenames = [
+      "#{rails_version}_#{@adapter}.yml",
+      "#{rails_version}_fallback.yml",
+      "all_#{@adapter}.yml",
+      "all_fallback.yml",
+    ]
+
+    @test_case_file_path =
+      basenames.map { |bn| current_dir.join(bn) }.find(&:exist?)
   end
 end
