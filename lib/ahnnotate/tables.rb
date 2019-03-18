@@ -49,10 +49,20 @@ module Ahnnotate
           )
         end
 
+        foreign_keys = @connection.foreign_keys(table_name).map do |fk|
+          ForeignKey.new(
+            name: fk.name,
+            from_column: fk.column,
+            to_table: fk.to_table,
+            to_column: fk.primary_key
+          )
+        end
+
         yield Table.new(
           name: table_name,
           columns: columns,
-          indexes: indexes
+          indexes: indexes,
+          foreign_keys: foreign_keys,
         )
       end
     end

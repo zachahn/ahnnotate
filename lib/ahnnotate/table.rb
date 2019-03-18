@@ -3,6 +3,7 @@ module Ahnnotate
     attr_accessor :name
     attr_accessor :columns
     attr_accessor :indexes
+    attr_accessor :foreign_keys
 
     def initialize(**args)
       args.each do |key, value|
@@ -29,6 +30,13 @@ module Ahnnotate
         output.puts "#{comment} Indexes:"
         output.puts comment
         output.print tabularizer.call(indexes, [:name, :presentable_columns, :presentable_unique, :comment])
+        output.puts comment
+      end
+
+      if foreign_keys.any?
+        output.puts "#{comment} Foreign keys:"
+        output.puts comment
+        output.puts tabularizer.call(foreign_keys, [:from, :to, :name])
         output.puts comment
       end
 

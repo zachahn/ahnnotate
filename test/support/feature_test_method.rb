@@ -31,7 +31,7 @@ def test_PLACEHOLDER_DB_ADAPTER_works
     end
   ensure
     ActiveRecord::Base.connection.tables.each do |table|
-      ActiveRecord::Base.connection.drop_table(table)
+      ActiveRecord::Base.connection.drop_table(table, force: :cascade, if_exists: true)
     end
 
     ActiveRecord::Base.remove_connection
