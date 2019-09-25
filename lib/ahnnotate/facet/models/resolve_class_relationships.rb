@@ -2,7 +2,9 @@ module Ahnnotate
   module Facet
     module Models
       class ResolveClassRelationships
-        include ProcParty
+        def to_proc
+          method(:call).to_proc
+        end
 
         def call(extracted_classes)
           object_space =

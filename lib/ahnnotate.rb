@@ -1,7 +1,6 @@
 require "yaml"
 require "active_record"
 require "parser/current"
-require "proc_party"
 require "stringio"
 
 require "ahnnotate/refinement/dig"

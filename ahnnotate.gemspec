@@ -34,5 +34,4 @@ DESC
 
   spec.add_runtime_dependency "activerecord", ">= 4.0.0", "< 6"
   spec.add_runtime_dependency "parser"
-  spec.add_runtime_dependency "proc_party"
 end

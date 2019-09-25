@@ -2,7 +2,9 @@ module Ahnnotate
   module Facet
     module Models
       class ResolveActiveRecordModels
-        include ProcParty
+        def to_proc
+          method(:call).to_proc
+        end
 
         def call(object_space)
           tree = {}
