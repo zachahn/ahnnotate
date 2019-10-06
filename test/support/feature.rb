@@ -1,7 +1,5 @@
 module FeatureTest
   def self.define(feature_name:, target: Ahnnotate::Function::Main)
-    feature_test_file, lineno, * = caller.first.split(":")
-
     klass = Class.new(TestCase)
     klass.class_exec(&Proc.new)
     integration_databases.each do |adapter, database_url|
@@ -10,10 +8,10 @@ module FeatureTest
           .gsub(/PLACEHOLDER_DB_ADAPTER/, adapter)
           .gsub(/PLACEHOLDER_DB_URL/, database_url)
 
-      klass.class_eval(test_method_contents, feature_test_file, lineno.to_i)
+      klass.class_eval(test_method_contents, feature_test_method_template_path)
     end
 
-    klass.class_eval(feature_test_helpers_contents, feature_test_file, lineno.to_i)
+    klass.class_eval(feature_test_helpers_contents, feature_test_helpers_contents)
 
     klass.class_eval do
       define_method :target_class do
@@ -32,13 +30,19 @@ module FeatureTest
   end
 
   def self.feature_test_helpers_contents
-    @feature_test_helpers_contents ||=
-      File.read(File.join(__dir__, "feature_test_helpers.rb"))
+    @feature_test_helpers_contents ||= File.read(feature_test_helpers_contents_path)
   end
 
   def self.feature_test_method_template
-    @feature_test_method_template ||=
-      File.read(File.join(__dir__, "feature_test_method.rb"))
+    @feature_test_method_template ||= File.read(feature_test_method_template_path)
+  end
+
+  def self.feature_test_helpers_contents_path
+    File.join(__dir__, "feature_test_helpers.rb")
+  end
+
+  def self.feature_test_method_template_path
+    File.join(__dir__, "feature_test_method.rb")
   end
 end
 
