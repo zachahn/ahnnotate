@@ -1,0 +1,16 @@
+---
+before:
+  app/models/widget.rb: |
+    class Widget < ActiveRecord::Base
+    end
+after:
+  app/models/widget.rb: |
+    $ == Schema Information
+    $
+    $ Table name: widgets
+    $
+    $   id    bigint    not null, primary key
+    $
+
+    class Widget < ActiveRecord::Base
+    end

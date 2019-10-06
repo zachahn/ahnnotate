@@ -1,14 +1,28 @@
 module Ahnnotate
   class Column
     attr_reader :name
-    attr_reader :type
 
-    def initialize(name:, type:, nullable:, primary_key:, default:)
+    def self.sql_type_map
+      @sql_type_map ||=
+        begin
+          map = Hash.new { |_self, k| k }
+          map["datetime"] = "timestamp"
+          map["timestamp with time zone"] = "timestamptz"
+          map["timestamp without time zone"] = "timestamp"
+          map
+        end
+    end
+
+    def initialize(name:, sql_type:, nullable:, primary_key:, default:)
       @name = name
-      @type = type
+      @sql_type = sql_type.to_s.downcase
       @nullable = nullable
       @primary_key = primary_key
       @default = default
+    end
+
+    def type
+      self.class.sql_type_map[@sql_type]
     end
 
     def details

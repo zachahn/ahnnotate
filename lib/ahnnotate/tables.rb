@@ -29,7 +29,7 @@ module Ahnnotate
 
           Column.new(
             name: c.name,
-            type: c.type.to_s,
+            sql_type: c.sql_type,
             nullable: c.null,
             primary_key: is_primary_key,
             default: c.default
