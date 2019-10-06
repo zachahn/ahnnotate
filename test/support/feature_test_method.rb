@@ -30,7 +30,14 @@ def test_PLACEHOLDER_DB_ADAPTER_works
       assert_equal(expected, actual)
     end
   ensure
-    ActiveRecord::Base.connection.tables.each do |table|
+    data_sources_method =
+      if Ahnnotate::ActiveRecordVersion.five_and_up?
+        :data_sources
+      else
+        :tables
+      end
+
+    ActiveRecord::Base.connection.public_send(data_sources_method).each do |table|
       ActiveRecord::Base.connection.drop_table(table, force: :cascade, if_exists: true)
     end
 
