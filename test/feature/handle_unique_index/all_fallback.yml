@@ -9,16 +9,13 @@ after:
     $
     $ Table name: posts
     $
-    $   id             integer     not null, primary key
-    $   title          text
-    $   content        text
-    $   likes_count    integer
-    $   pinned         boolean
-    $   created_at     datetime    not null
-    $   updated_at     datetime    not null
+    $   id       integer    not null, primary key
+    $   title    text
+    $   slug     integer
     $
     $ Indexes:
     $
+    $   index_posts_on_slug     (slug)     UNIQUE
     $   index_posts_on_title    (title)    UNIQUE
     $
 

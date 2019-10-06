@@ -100,11 +100,11 @@ class FeatureTester
       return @test_case_file_path
     end
 
-    rails_version = "#{ActiveRecord::VERSION::MAJOR}_#{ActiveRecord::VERSION::MINOR}"
-
     basenames = [
-      "#{rails_version}_#{@adapter}.yml",
-      "#{rails_version}_fallback.yml",
+      "#{ActiveRecord::VERSION::MAJOR}_#{ActiveRecord::VERSION::MINOR}_#{@adapter}.yml",
+      "#{ActiveRecord::VERSION::MAJOR}_#{@adapter}.yml",
+      "#{ActiveRecord::VERSION::MAJOR}_#{ActiveRecord::VERSION::MINOR}_fallback.yml",
+      "#{ActiveRecord::VERSION::MAJOR}_fallback.yml",
       "all_#{@adapter}.yml",
       "all_fallback.yml",
     ]

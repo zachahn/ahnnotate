@@ -1,5 +1,5 @@
-create_table :users do |t|
+create_table :users, id: :integer do |t|
   t.text :preferred_name
-
-  t.timestamps null: false
 end
+
+change_column_null :users, :id, false

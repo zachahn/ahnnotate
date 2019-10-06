@@ -1,7 +1,3 @@
-create_table :posts do |t|
-  t.text :content
-  t.integer :likes_count
-  t.boolean :pinned
+create_table :posts, id: :integer
 
-  t.timestamps null: false
-end
+change_column_null :posts, :id, false

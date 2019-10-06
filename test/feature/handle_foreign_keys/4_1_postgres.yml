@@ -13,7 +13,6 @@ after:
     $ Table name: posts
     $
     $   id           integer    not null, primary key
-    $   content      text
     $   author_id    integer
     $
 
@@ -24,8 +23,7 @@ after:
     $
     $ Table name: authors
     $
-    $   id      integer    not null, primary key
-    $   name    text
+    $   id    integer    not null, primary key
     $
 
     class Author < ActiveRecord::Base

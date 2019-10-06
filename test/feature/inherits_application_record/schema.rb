@@ -1,5 +1,5 @@
-create_table :widgets do |t|
+create_table :widgets, id: :integer do |t|
   t.text :name
-
-  t.timestamps null: false
 end
+
+change_column_null :widgets, :id, false

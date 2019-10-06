@@ -1,6 +1,6 @@
-create_table :employees do |t|
+create_table :employees, id: :integer do |t|
   t.text :name
-  t.text :type, null: :false
-
-  t.timestamps null: false
+  t.text :type
 end
+
+change_column_null :employees, :id, false

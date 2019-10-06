@@ -9,12 +9,10 @@ after:
     $
     $ Table name: posts
     $
-    $   id             integer     not null, primary key
-    $   content        text        not null, default ("hi")
-    $   pinned         boolean     not null, default (false)
-    $   author_name    text        default ("Fish")
-    $   created_at     datetime    not null
-    $   updated_at     datetime    not null
+    $   id             integer    not null, primary key
+    $   content        text       not null, default ("hi")
+    $   pinned         boolean    not null, default (false)
+    $   author_name    text       default ("Author")
     $
 
     class Post < ActiveRecord::Base
