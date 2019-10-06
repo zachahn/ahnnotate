@@ -8,6 +8,7 @@ require "ahnnotate/refinement/dig"
 require "ahnnotate/refinement/pathname_glob"
 require "ahnnotate/refinement/yield_self"
 
+require "ahnnotate/abilities"
 require "ahnnotate/active_record_version"
 require "ahnnotate/column"
 require "ahnnotate/command"

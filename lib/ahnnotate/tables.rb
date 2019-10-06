@@ -4,6 +4,7 @@ module Ahnnotate
 
     def initialize(connection = ActiveRecord::Base.connection)
       @connection = connection
+      @abilities = Abilities.new(connection)
     end
 
     def to_h
@@ -49,14 +50,19 @@ module Ahnnotate
           )
         end
 
-        foreign_keys = @connection.foreign_keys(table_name).map do |fk|
-          ForeignKey.new(
-            name: fk.name,
-            from_column: fk.column,
-            to_table: fk.to_table,
-            to_column: fk.primary_key
-          )
-        end
+        foreign_keys =
+          if @abilities.foreign_key?
+            @connection.foreign_keys(table_name).map do |fk|
+              ForeignKey.new(
+                name: fk.name,
+                from_column: fk.column,
+                to_table: fk.to_table,
+                to_column: fk.primary_key
+              )
+            end
+          else
+            []
+          end
 
         yield Table.new(
           name: table_name,
