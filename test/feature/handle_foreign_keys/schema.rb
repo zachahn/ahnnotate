@@ -7,4 +7,6 @@ create_table :posts do |t|
   t.integer :author_id
 end
 
-add_foreign_key :posts, :authors
+if !(ActiveRecord::VERSION::MAJOR == 4 && ActiveRecord::VERSION::MINOR == 1)
+  add_foreign_key :posts, :authors
+end

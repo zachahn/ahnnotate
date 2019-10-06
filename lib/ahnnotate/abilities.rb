@@ -6,7 +6,15 @@ module Ahnnotate
     end
 
     def foreign_key?
-      @adapter_name != "sqlite"
+      if @adapter_name == "sqlite"
+        return false
+      end
+
+      if !@connection.respond_to?(:foreign_keys)
+        return false
+      end
+
+      true
     end
   end
 end

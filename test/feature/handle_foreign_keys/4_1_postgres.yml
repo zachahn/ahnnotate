@@ -1,0 +1,32 @@
+---
+before:
+  app/models/post.rb: |
+    class Post < ActiveRecord::Base
+    end
+  app/models/author.rb: |
+    class Author < ActiveRecord::Base
+    end
+after:
+  app/models/post.rb: |
+    $ == Schema Information
+    $
+    $ Table name: posts
+    $
+    $   id           integer    not null, primary key
+    $   content      text
+    $   author_id    integer
+    $
+
+    class Post < ActiveRecord::Base
+    end
+  app/models/author.rb: |
+    $ == Schema Information
+    $
+    $ Table name: authors
+    $
+    $   id      integer    not null, primary key
+    $   name    text
+    $
+
+    class Author < ActiveRecord::Base
+    end
