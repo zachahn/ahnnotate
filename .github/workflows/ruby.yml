@@ -1,0 +1,78 @@
+name: Test
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:11.5
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ahnnotate_test
+        ports:
+        - 5432/tcp
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby:
+          - 2.5.x
+          - 2.4.x
+          - 2.3.x
+        gemfile:
+          - gemfiles/rails52.gemfile
+          - gemfiles/rails51.gemfile
+          - gemfiles/rails50.gemfile
+          - gemfiles/rails42.gemfile
+          - gemfiles/rails41.gemfile
+        exclude:
+          # Don't run Ruby 2.5 on Rails 4
+          - ruby: 2.5.x
+            gemfile: gemfiles/rails42.gemfile
+          - ruby: 2.5.x
+            gemfile: gemfiles/rails41.gemfile
+
+          # Don't run Ruby 2.4 on Rails 5
+          - ruby: 2.4.x
+            gemfile: gemfiles/rails52.gemfile
+          - ruby: 2.4.x
+            gemfile: gemfiles/rails51.gemfile
+          - ruby: 2.4.x
+            gemfile: gemfiles/rails50.gemfile
+
+          # Run Ruby 2.3 on oldest Rails
+          - ruby: 2.3.x
+            gemfile: gemfiles/rails52.gemfile
+          - ruby: 2.3.x
+            gemfile: gemfiles/rails51.gemfile
+          - ruby: 2.3.x
+            gemfile: gemfiles/rails50.gemfile
+          - ruby: 2.3.x
+            gemfile: gemfiles/rails42.gemfile
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+    - name: Install build dependencies
+      run: |
+        sudo apt-get install -y sqlite3 libsqlite3-dev libpq-dev
+    - name: Install dependencies
+      env:
+        BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+      run: |
+        gem install bundler -v 1.17.3
+        bundle install --jobs 4 --retry 3
+    - name: Test
+      env:
+        BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+        AHNNOTATE_POSTGRES_DATABASE_URL: postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/ahnnotate_test
+      run: |
+        bundle exec rake
