@@ -6,7 +6,12 @@ module Ahnnotate
       @sql_type_map ||=
         begin
           map = Hash.new { |_self, k| k }
+          map["character varying"] = "varchar"
+          map["character"] = "char"
           map["datetime"] = "timestamp"
+          map["double precision"] = "double"
+          map["time with time zone"] = "time"
+          map["time without time zone"] = "timetz"
           map["timestamp with time zone"] = "timestamptz"
           map["timestamp without time zone"] = "timestamp"
           map
