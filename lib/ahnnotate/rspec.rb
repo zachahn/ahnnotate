@@ -1,3 +1,5 @@
+require "ahnnotate"
+
 # This RSpec matcher only works for Rails. Here's a quick usage example:
 #
 #   require "rails_helper"
