@@ -32,6 +32,6 @@ DESC
   spec.add_development_dependency "appraisal"
   spec.add_development_dependency "dotenv"
 
-  spec.add_runtime_dependency "activerecord", ">= 4.0.0", "< 6"
+  spec.add_runtime_dependency "activerecord", ">= 4.0.0"
   spec.add_runtime_dependency "parser"
 end
