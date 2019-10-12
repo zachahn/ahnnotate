@@ -20,7 +20,7 @@ module Ahnnotate
 
     def initialize(name:, sql_type:, nullable:, primary_key:, default:)
       @name = name
-      @sql_type = sql_type.to_s.downcase
+      @sql_type = sql_type.to_s.downcase.gsub(/\(.*?\)/, "")
       @nullable = nullable
       @primary_key = primary_key
       @default = default

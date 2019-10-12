@@ -67,7 +67,7 @@ module Ahnnotate
 
           classlike = ModuleNode.new(class_name.to_s)
           classlike.claimed_superclass = superclass_name.to_s
-          classlike.parent = parent
+          classlike.module_parent = parent
 
           classlike
         end

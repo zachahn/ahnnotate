@@ -21,7 +21,7 @@ module Ahnnotate
           object_space["::ActiveRecord::Base"] =
             ModuleNode.new(
               "ActiveRecord::Base",
-              parent: object_space[""],
+              module_parent: object_space[""],
               abstract_class: nil
             )
           object_space["::ActiveRecord::Base"].is_active_record_base = true

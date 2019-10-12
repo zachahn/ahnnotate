@@ -15,7 +15,7 @@ module Ahnnotate
         # Named to fit the ModelSchema interface. This is basically `Class#name`
         attr_accessor :name
         # Named to fit the ModelSchema interface. This is the "outer class"
-        attr_accessor :parent
+        attr_accessor :module_parent
         # Named to fit the ModelSchema interface. This is the class that the
         # current class inherits from. This is computed, whereas
         # `claimed_superclass` is what is parsed from the source
@@ -31,13 +31,13 @@ module Ahnnotate
         attr_accessor :path
 
         def initialize(name,
-          parent: nil,
+          module_parent: nil,
           is_a_kind_of_activerecord_base: false,
           claimed_superclass: nil,
           explicit_table_name: nil,
           abstract_class: nil)
           self.name = name
-          self.parent = parent
+          self.module_parent = parent
           self.is_a_kind_of_activerecord_base = is_a_kind_of_activerecord_base
           self.claimed_superclass = claimed_superclass
           self.explicit_table_name = explicit_table_name
@@ -81,10 +81,16 @@ module Ahnnotate
         end
 
         # Named to fit the ModelSchema interface. It was originally implemented
+        # in ActiveRecord::Inheritance in Rails 6.0.
+        def base_class?
+          base_class == self
+        end
+
+        # Named to fit the ModelSchema interface. It was originally implemented
         # in ActiveSupport::Introspection
-        def parents
-          if parent
-            [parent, *parent.parent]
+        def module_parents
+          if module_parent
+            [module_parent, *module_parent.module_parent]
           else
             []
           end
@@ -132,7 +138,26 @@ module Ahnnotate
           end
         end
 
+        module ActiveRecord4And5Compatibility
+          # Named to fit the ModelSchema interface. It was originally implemented
+          # in ActiveSupport::CoreExt::Module::Introspection in Rails 6.0.
+          def parent
+            module_parent
+          end
+
+          # def parent=(parent_)
+          #   self.module_parent = parent_
+          # end
+
+          # Named to fit the ModelSchema interface. It was originally implemented
+          # in ActiveSupport::CoreExt::Module::Introspection in Rails 6.0.
+          def parents
+            module_parents
+          end
+        end
+
         include ActiveRecord4Compatibility
+        include ActiveRecord4And5Compatibility
       end
     end
   end
