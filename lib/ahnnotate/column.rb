@@ -10,8 +10,8 @@ module Ahnnotate
           map["character"] = "char"
           map["datetime"] = "timestamp"
           map["double precision"] = "double"
-          map["time with time zone"] = "time"
-          map["time without time zone"] = "timetz"
+          map["time with time zone"] = "timetz"
+          map["time without time zone"] = "time"
           map["timestamp with time zone"] = "timestamptz"
           map["timestamp without time zone"] = "timestamp"
           map

@@ -1,0 +1,18 @@
+---
+before:
+  app/models/widget.rb: |
+    class Widget < ActiveRecord::Base
+    end
+after:
+  app/models/widget.rb: |
+    $ == Schema Information
+    $
+    $ Table name: widgets
+    $
+    $   id             integer    not null, primary key
+    $   type_time      time
+    $   type_timetz    timetz
+    $
+
+    class Widget < ActiveRecord::Base
+    end
