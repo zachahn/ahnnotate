@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ahnnotate (0.5.0)
+    ahnnotate (0.5.1)
       activerecord (>= 4.0.0)
       parser
 
